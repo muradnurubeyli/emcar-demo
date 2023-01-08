@@ -28,18 +28,26 @@ namespace testServerless.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string keyword)
         {
-            var result = await _elasticClient.SearchAsync<Auto>(
-                             s => s.Query(
-                                 q => q.QueryString(
-                                     d => d.Query('*' + keyword + '*')
-                                 )).Size(5000));
-
+            //var result = await _elasticClient.SearchAsync<Auto>(
+            //                 s => s.Query(
+            //                     q => q.QueryString(
+            //                         d => d.Query('*' + keyword + '*')
+            //                     )).Size(5000));
             _logger.LogInformation("AutoController Get - ", DateTime.UtcNow);
-            return Ok(result.Documents.ToList());
+
+            var response = await _elasticClient.Indices.GetAliasAsync();
+            string test = "";
+            foreach (var index in response.Indices)
+            {
+                test += index.Key.ToString();
+            }
+
+            //return Ok(result.Documents.ToList());
+            return Ok(test);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
+        //[HttpGet(Name = "GetAllAuto")]
+        //public async Task<IActionResult> GetAutos()
         //{
         //    return Ok(await _autoRepository.GetAll());
         //}
@@ -51,19 +59,6 @@ namespace testServerless.Controllers
             {
                 return BadRequest();
             }
-
-            // Add product to ELS index
-            //var product1 = new Product
-            //{
-            //    Description = "Product 1",
-            //    Id = 1,
-            //    Price = 200,
-            //    Measurement = "2",
-            //    Quantity = 90,
-            //    ShowPrice = true,
-            //    Title = "Nike Shoes",
-            //    Unit = "10"
-            //};
 
             // Index product dto
             command.DateExpires = DateTime.Now.AddMinutes(paymentDay);
