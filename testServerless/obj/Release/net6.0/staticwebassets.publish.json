@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "N2HZlgM6fcqtOGl4AqLqSX2RMKd7H8pFTUYIokTfeSU=",
+  "Source": "testServerless",
+  "BasePath": "_content/testServerless",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
