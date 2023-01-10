@@ -121,10 +121,13 @@ C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Amazon.Lambda.
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\AWSSDK.Core.dll
+C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\AWSSDK.Elasticsearch.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\AWSSDK.Extensions.NETCore.Setup.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Azure.Identity.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Bogus.dll
+C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Elasticsearch.Net.dll
+C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Elasticsearch.Net.Aws.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\FluentValidation.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
@@ -162,6 +165,7 @@ C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Microsoft.Open
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Mono.TextTemplating.dll
+C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Nest.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Polly.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
@@ -206,7 +210,3 @@ C:\Users\murad\Desktop\emcar-demo\testServerless\obj\Debug\net6.0\refint\testSer
 C:\Users\murad\Desktop\emcar-demo\testServerless\obj\Debug\net6.0\testServerless.pdb
 C:\Users\murad\Desktop\emcar-demo\testServerless\obj\Debug\net6.0\testServerless.genruntimeconfig.cache
 C:\Users\murad\Desktop\emcar-demo\testServerless\obj\Debug\net6.0\ref\testServerless.dll
-C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\AWSSDK.Elasticsearch.dll
-C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Elasticsearch.Net.dll
-C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Elasticsearch.Net.Aws.dll
-C:\Users\murad\Desktop\emcar-demo\testServerless\bin\Debug\net6.0\Nest.dll

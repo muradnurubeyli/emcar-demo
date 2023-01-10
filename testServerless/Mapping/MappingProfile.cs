@@ -10,6 +10,12 @@ namespace testServerless.Mapping
         {
             CreateMap<CreateAutoViewModel, Auto>()
                 .ReverseMap();
+
+            CreateMap<UpdateAutoViewModel, Auto>()
+               .ReverseMap();
+
+            CreateMap<GetAutoViewModel, Auto>()
+               .ReverseMap();
         }
     }
 }
