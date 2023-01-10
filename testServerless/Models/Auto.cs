@@ -4,7 +4,7 @@
     {
         public Auto()
         {
-            //this.Auctions = new HashSet<Auction>();
+            this.Auctions = new HashSet<Auction>();
             //this.AutoExchangesOutcome = new HashSet<AutoExchange>();
             //this.AutoExchangesIncome = new HashSet<AutoExchange>();
             //this.AutoFavorites = new HashSet<AutoFavorite>();
@@ -90,5 +90,7 @@
         public virtual City City { get; set; }
         public virtual Currency Currency { get; set; }
         public virtual User User { get; set; }
+
+        public virtual ICollection<Auction> Auctions { get; set; }
     }
 }

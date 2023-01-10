@@ -17,6 +17,12 @@ namespace testServerless.Context
         {
         }
 
+        public DbSet<Auction> Auctions { get; set; }
+        public DbSet<AuctionBid> AuctionBids { get; set; }
+        public DbSet<AuctionConnection> AuctionConnections { get; set; }
+        public DbSet<AuctionFavorite> AuctionFavorites { get; set; }
+        public DbSet<AuctionPhoto> AuctionPhotos { get; set; }
+        public DbSet<AuctionStatus> AuctionStatuses { get; set; }
         public DbSet<Auto> Autos { get; set; }
         public DbSet<AutoBodyType> AutoBodyTypes { get; set; }
         public DbSet<AutoColor> AutoColors { get; set; }
