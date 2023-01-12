@@ -45,9 +45,9 @@ namespace testServerless.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //var connStr = "Server=CBM2; Database=Emcar; Trusted_Connection=True; TrustServerCertificate=True; MultipleActiveResultSets=true;Integrated Security=True;";
+                var connStr = "Server=CBM2; Database=Emcar; Trusted_Connection=True; TrustServerCertificate=True; MultipleActiveResultSets=true;Integrated Security=True;";
 
-                var connStr = "Server=emcar.chmm0uo74534.eu-central-1.rds.amazonaws.com;Database=Emcar;User Id=master;Password=Master12345;TrustServerCertificate=True; TrustServerCertificate=True;";
+                //var connStr = "Server=emcar.chmm0uo74534.eu-central-1.rds.amazonaws.com;Database=Emcar;User Id=master;Password=Master12345;TrustServerCertificate=True; TrustServerCertificate=True;";
 
                 optionsBuilder.UseSqlServer(connStr, opt =>
                 {

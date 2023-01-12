@@ -14,6 +14,20 @@ namespace testServerless.Migrations
                 name: "dbo");
 
             migrationBuilder.CreateTable(
+                name: "AuctionStatus",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuctionStatus", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AutoColor",
                 schema: "dbo",
                 columns: table => new
@@ -450,6 +464,229 @@ namespace testServerless.Migrations
                         onDelete: ReferentialAction.NoAction);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Auction",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AutoID = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CurrentPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CurrencyID = table.Column<int>(type: "int", nullable: false),
+                    DateStopped = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CompletionJobID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeletionJobID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Views = table.Column<int>(type: "int", nullable: false),
+                    PriceUSDSearch = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceUAHSearch = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StatusID = table.Column<int>(type: "int", nullable: false),
+                    SeoFriendlyUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Auction", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Auction_AuctionStatus_StatusID",
+                        column: x => x.StatusID,
+                        principalSchema: "dbo",
+                        principalTable: "AuctionStatus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Auction_Auto_AutoID",
+                        column: x => x.AutoID,
+                        principalSchema: "dbo",
+                        principalTable: "Auto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Auction_Currency_CurrencyID",
+                        column: x => x.CurrencyID,
+                        principalSchema: "dbo",
+                        principalTable: "Currency",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuctionBid",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuctionID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuctionBid", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuctionBid_Auction_AuctionID",
+                        column: x => x.AuctionID,
+                        principalSchema: "dbo",
+                        principalTable: "Auction",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_AuctionBid_User_UserID",
+                        column: x => x.UserID,
+                        principalSchema: "dbo",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuctionConnection",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuctionID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    Connection = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuctionConnection", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuctionConnection_Auction_AuctionID",
+                        column: x => x.AuctionID,
+                        principalSchema: "dbo",
+                        principalTable: "Auction",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_AuctionConnection_User_UserID",
+                        column: x => x.UserID,
+                        principalSchema: "dbo",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuctionFavorite",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuctionID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuctionFavorite", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuctionFavorite_Auction_AuctionID",
+                        column: x => x.AuctionID,
+                        principalSchema: "dbo",
+                        principalTable: "Auction",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_AuctionFavorite_User_UserID",
+                        column: x => x.UserID,
+                        principalSchema: "dbo",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuctionPhoto",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuctionID = table.Column<int>(type: "int", nullable: false),
+                    IsMain = table.Column<bool>(type: "bit", nullable: false),
+                    uuid = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuctionPhoto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuctionPhoto_Auction_AuctionID",
+                        column: x => x.AuctionID,
+                        principalSchema: "dbo",
+                        principalTable: "Auction",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Auction_AutoID",
+                schema: "dbo",
+                table: "Auction",
+                column: "AutoID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Auction_CurrencyID",
+                schema: "dbo",
+                table: "Auction",
+                column: "CurrencyID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Auction_StatusID",
+                schema: "dbo",
+                table: "Auction",
+                column: "StatusID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuctionBid_AuctionID",
+                schema: "dbo",
+                table: "AuctionBid",
+                column: "AuctionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuctionBid_UserID",
+                schema: "dbo",
+                table: "AuctionBid",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuctionConnection_AuctionID",
+                schema: "dbo",
+                table: "AuctionConnection",
+                column: "AuctionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuctionConnection_UserID",
+                schema: "dbo",
+                table: "AuctionConnection",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuctionFavorite_AuctionID",
+                schema: "dbo",
+                table: "AuctionFavorite",
+                column: "AuctionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuctionFavorite_UserID",
+                schema: "dbo",
+                table: "AuctionFavorite",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuctionPhoto_AuctionID",
+                schema: "dbo",
+                table: "AuctionPhoto",
+                column: "AuctionID");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Auto_AutoDealerId",
                 schema: "dbo",
@@ -574,6 +811,30 @@ namespace testServerless.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AuctionBid",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "AuctionConnection",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "AuctionFavorite",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "AuctionPhoto",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "Auction",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "AuctionStatus",
+                schema: "dbo");
+
             migrationBuilder.DropTable(
                 name: "Auto",
                 schema: "dbo");

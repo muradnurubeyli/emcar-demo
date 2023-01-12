@@ -12,7 +12,7 @@ using testServerless.Context;
 namespace testServerless.Migrations
 {
     [DbContext(typeof(EmcarContext))]
-    [Migration("20230107160512_v1")]
+    [Migration("20230112062805_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -24,6 +24,199 @@ namespace testServerless.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("testServerless.Models.Auction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AutoID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompletionJobID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CurrencyID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("CurrentPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateStopped")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletionJobID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PriceUAHSearch")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceUSDSearch")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SeoFriendlyUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("StartPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("StatusID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Views")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AutoID");
+
+                    b.HasIndex("CurrencyID");
+
+                    b.HasIndex("StatusID");
+
+                    b.ToTable("Auction", "dbo");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionBid", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AuctionID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuctionID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("AuctionBid", "dbo");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionConnection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuctionID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Connection")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserID")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuctionID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("AuctionConnection", "dbo");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionFavorite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuctionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuctionID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("AuctionFavorite", "dbo");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuctionID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("uuid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuctionID");
+
+                    b.ToTable("AuctionPhoto", "dbo");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuctionStatus", "dbo");
+                });
 
             modelBuilder.Entity("testServerless.Models.Auto", b =>
                 {
@@ -574,6 +767,101 @@ namespace testServerless.Migrations
                     b.ToTable("User", "dbo");
                 });
 
+            modelBuilder.Entity("testServerless.Models.Auction", b =>
+                {
+                    b.HasOne("testServerless.Models.Auto", "Auto")
+                        .WithMany("Auctions")
+                        .HasForeignKey("AutoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("testServerless.Models.Currency", "Currency")
+                        .WithMany("Auctions")
+                        .HasForeignKey("CurrencyID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("testServerless.Models.AuctionStatus", "AuctionStatus")
+                        .WithMany("Auctions")
+                        .HasForeignKey("StatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AuctionStatus");
+
+                    b.Navigation("Auto");
+
+                    b.Navigation("Currency");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionBid", b =>
+                {
+                    b.HasOne("testServerless.Models.Auction", "Auction")
+                        .WithMany("AuctionBids")
+                        .HasForeignKey("AuctionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("testServerless.Models.User", "User")
+                        .WithMany("AuctionBids")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Auction");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionConnection", b =>
+                {
+                    b.HasOne("testServerless.Models.Auction", "Auction")
+                        .WithMany("AuctionConnections")
+                        .HasForeignKey("AuctionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("testServerless.Models.User", "User")
+                        .WithMany("AuctionConnections")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Auction");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionFavorite", b =>
+                {
+                    b.HasOne("testServerless.Models.Auction", "Auction")
+                        .WithMany("AuctionFavorites")
+                        .HasForeignKey("AuctionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("testServerless.Models.User", "User")
+                        .WithMany("AuctionFavorites")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Auction");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionPhoto", b =>
+                {
+                    b.HasOne("testServerless.Models.Auction", "Auction")
+                        .WithMany("AuctionPhotos")
+                        .HasForeignKey("AuctionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Auction");
+                });
+
             modelBuilder.Entity("testServerless.Models.Auto", b =>
                 {
                     b.HasOne("testServerless.Models.AutoDealer", "AutoDealer")
@@ -736,6 +1024,27 @@ namespace testServerless.Migrations
                         .HasForeignKey("CityId");
                 });
 
+            modelBuilder.Entity("testServerless.Models.Auction", b =>
+                {
+                    b.Navigation("AuctionBids");
+
+                    b.Navigation("AuctionConnections");
+
+                    b.Navigation("AuctionFavorites");
+
+                    b.Navigation("AuctionPhotos");
+                });
+
+            modelBuilder.Entity("testServerless.Models.AuctionStatus", b =>
+                {
+                    b.Navigation("Auctions");
+                });
+
+            modelBuilder.Entity("testServerless.Models.Auto", b =>
+                {
+                    b.Navigation("Auctions");
+                });
+
             modelBuilder.Entity("testServerless.Models.AutoBodyType", b =>
                 {
                     b.Navigation("Autos");
@@ -811,6 +1120,8 @@ namespace testServerless.Migrations
 
             modelBuilder.Entity("testServerless.Models.Currency", b =>
                 {
+                    b.Navigation("Auctions");
+
                     b.Navigation("Autos");
                 });
 
@@ -821,6 +1132,12 @@ namespace testServerless.Migrations
 
             modelBuilder.Entity("testServerless.Models.User", b =>
                 {
+                    b.Navigation("AuctionBids");
+
+                    b.Navigation("AuctionConnections");
+
+                    b.Navigation("AuctionFavorites");
+
                     b.Navigation("Autos");
                 });
 #pragma warning restore 612, 618
