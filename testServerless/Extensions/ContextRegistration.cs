@@ -11,7 +11,7 @@ namespace testServerless.Extensions
             services.AddDbContext<EmcarContext>(conf =>
             {
                 //var connStr = configuration["EmcarDbConnectionString"].ToString();
-                var connStr = "Server=emcar.chmm0uo74534.eu-central-1.rds.amazonaws.com,1433;Database=Emcar;User Id=master;Password=Master12345;TrustServerCertificate=True; TrustServerCertificate=True;";
+                var connStr = "Server=CBM; Database=Emcar; Trusted_Connection=True; TrustServerCertificate=True; MultipleActiveResultSets=true;Integrated Security=True;";
                 conf.UseSqlServer(connStr, opt =>
                 {
                     opt.EnableRetryOnFailure();
@@ -20,6 +20,7 @@ namespace testServerless.Extensions
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IAutoRepository, AutoRepository>();
+            services.AddScoped<IAuctionRepository, AuctionRepository>();
 
             return services;
         }

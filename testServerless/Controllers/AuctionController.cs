@@ -46,42 +46,54 @@ namespace testServerless.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> Create(AuctionCreateVM modelVM, bool activate = false)
+        [Route("create-auction")]
+        public async Task<IActionResult> Create([FromBody] AuctionCreateVM command, bool activate = false)
         {
-            //User user = UserService.GetUserByEmail(User.Identity.Name);
-            //Auto auto = user?.Autoes.FirstOrDefault(a => a.ID == modelVM.AutoID);
-            //if (auto == null || auto.InAuction)
-            //    return HttpNotFound();
-
-            Auction auction = await _auctionRepository.GetByIdAsync(modelVM.ID);
-
-            //decimal summ = _billingService.GeneratePriceForAuctionPublishing(modelVM.Days, modelVM.Hours);
-
-            //first reliz
-            //int days = XCarsConfiguration.AuctionDaysDuration;
-            //int hours = XCarsConfiguration.AuctionHoursDuration;
-
-            AuctionPublishModel auctioVM = new AuctionPublishModel
+            if (command == null)
             {
-                AutoId = modelVM.AutoID,
-                CurrencyID = modelVM.CurrencyID,
-                CurrentPrice = 100,
-                Days = modelVM.Days,
-                Hours = modelVM.Hours,
-                StartPrice = modelVM.StartPrice,
-                Description = modelVM.Description,
-                AuctionId = auction.Id,
-                Deadline = auction.Deadline
-            };
+                return BadRequest();
+            }
 
-            auction.Description = modelVM.Description;
-            auction.StartPrice = modelVM.StartPrice;
-            auction.CurrencyID = modelVM.CurrencyID;
+            Auction auction = _mapper.Map<AuctionCreateVM, Auction>(command);
+            await _auctionRepository.AddAsync(auction);
 
+            // Index product dto
+            //await _elasticClient.IndexDocumentAsync(auction);
+            _logger.LogInformation("AuctionController Get - ", DateTime.UtcNow);
+            activate = command.Deadline > DateTime.Now ? true : false;
+
+            return Ok(command);
+        }
+
+        [HttpPut]
+        [Route("update-auction/{id}")]
+        public IActionResult UpdateCar(int id, [FromBody] UpdateAuctionViewModel resource)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            if (id != resource.Id) return NotFound();
+
+            var resourceToModel = _mapper.Map<UpdateAuctionViewModel, Auction>(resource);
+            var auto = _auctionRepository.Update(resourceToModel);
+
+            if (resourceToModel == null) return NotFound();
+
+            // Index product dto
+            //_elasticClient.IndexDocumentAsync(auto);
+            _logger.LogInformation("AuctionController Get - ", DateTime.UtcNow);
+
+            return Ok(auto);
+        }
+
+        [HttpDelete]
+        [Route("delete-auction/{id}")]
+        public async Task<IActionResult> DeleteAuction(int id)
+        {
+            var auction = await _auctionRepository.FirstOrDefaultAsync(i => i.Id == id);
+            auction.StatusID = 2;
+            if (auction == null) return NotFound();
             _auctionRepository.Update(auction);
-            activate = auction.Deadline > DateTime.Now ? true : false;
 
-            return Ok("Created");
+            return Ok("Auction Deactivated");
         }
     }
 }

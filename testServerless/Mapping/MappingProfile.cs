@@ -16,6 +16,17 @@ namespace testServerless.Mapping
 
             CreateMap<GetAutoViewModel, Auto>()
                .ReverseMap();
+
+            #region Auction
+            CreateMap<AuctionCreateVM, Auction>()
+             .ReverseMap();
+
+            CreateMap<UpdateAuctionViewModel, Auction>()
+            .ReverseMap();
+
+            //CreateMap<GetAuctionViewModel, Auction>()
+            //.ReverseMap();
+            #endregion
         }
     }
 }

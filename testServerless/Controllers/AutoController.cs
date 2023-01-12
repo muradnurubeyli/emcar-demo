@@ -116,7 +116,7 @@ namespace testServerless.Controllers
 
         [HttpDelete]
         [Route("delete-car/{id}")]
-        public async Task<IActionResult> DeleteDeviceMake(int id)
+        public async Task<IActionResult> DeleteCar(int id)
         {
             var auto = await _autoRepository.GetByIdAsync(id);
             if (auto == null) return NotFound();
